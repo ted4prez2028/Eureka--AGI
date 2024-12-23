@@ -1,30 +1,33 @@
-// File: autonomousCreativity.js
-const { OpenAI } = require("openai"); // Updated OpenAI import
+const { OpenAI } = require("openai");
 
 require('dotenv').config();
 
 const openaiApiKey = process.env.OPENAI_API_KEY;
-// Initialize OpenAI with your API key
-
 const openai = new OpenAI({
-    apiKey: openaiApiKey
-  });
+  apiKey: openaiApiKey
+});
 
 exports.generateCreativeIdeas = async (prompt) => {
-  const baseResponse = await openai.createCompletion({
-    model: "text-davinci-003",
-    prompt: `Create a groundbreaking idea for: "${prompt}".`,
+  const baseResponse = await openai.chat.completions.create({
+    model: "gpt-4",
+    messages: [
+      { role: "system", content: "You are an AGI system capable of generating groundbreaking ideas." },
+      { role: "user", content: `Create a groundbreaking idea for: "${prompt}".` }
+    ],
     max_tokens: 200,
   });
 
-  const refinementResponse = await openai.createCompletion({
-    model: "text-davinci-003",
-    prompt: `Refine and expand upon the following idea: "${baseResponse.data.choices[0].text.trim()}".`,
+  const refinementResponse = await openai.chat.completions.create({
+    model: "gpt-4",
+    messages: [
+      { role: "system", content: "You are an AGI system capable of refining and expanding ideas." },
+      { role: "user", content: `Refine and expand upon the following idea: "${baseResponse.choices[0].message.content.trim()}".` }
+    ],
     max_tokens: 200,
   });
 
   return {
-    baseIdea: baseResponse.data.choices[0].text.trim(),
-    refinedIdea: refinementResponse.data.choices[0].text.trim(),
+    baseIdea: baseResponse.choices[0].message.content.trim(),
+    refinedIdea: refinementResponse.choices[0].message.content.trim(),
   };
 };

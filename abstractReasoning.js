@@ -1,5 +1,5 @@
 // File: abstractReasoning.js
-const { LogicEngine } = require("neural-symbolic-ai");
+const LogicEngine = require("./LogicEngine.js");
 
 exports.r = (facts, rules, hypothesis) => {
   const engine = new LogicEngine();

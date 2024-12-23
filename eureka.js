@@ -142,6 +142,15 @@ const processInputsCLI = async (agi, input) => {
   // Fully Autonomous Creativity
   const creativeIdeas = await unboundedCreativity.generateIdeas(input);
 
+  // Common Sense Reasoning
+  const commonSenseInference = await commonSense.reason(input);
+
+  // Self-Improvement
+  const improvedCode = selfImprovement.improve(fs.readFileSync("unifiedAGI.js", "utf-8"));
+
+  // Advanced Generalization
+  const generalization = advancedGeneralization.generalize(input);
+
   // Save State
   saveSession(consciousnessState);
 
@@ -163,6 +172,9 @@ const processInputsCLI = async (agi, input) => {
     ethical,
     embodimentFeedback,
     creativeIdeas,
+    commonSenseInference,
+    improvedCode,
+    generalization,
   };
 };
 
@@ -189,6 +201,9 @@ const runCLI = async () => {
       console.log(`Creative Ideas: ${JSON.stringify(result.creativeIdeas)}`);
       console.log(`Embodiment Feedback: ${JSON.stringify(result.embodimentFeedback.feedbackLoop)}`);
       console.log(`Ethical Decisions: ${JSON.stringify(result.ethical)}`);
+      console.log(`Common Sense Inference: ${JSON.stringify(result.commonSenseInference)}`);
+      console.log(`Self-Improvement: ${JSON.stringify(result.improvedCode)}`);
+      console.log(`Generalization: ${JSON.stringify(result.generalization)}`);
       console.log("--------------------\n");
     } catch (err) {
       console.error("Error processing input:", err.message);
