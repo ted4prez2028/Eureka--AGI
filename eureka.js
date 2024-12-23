@@ -1,15 +1,13 @@
 const readline = require("readline");
 const tf = require("@tensorflow/tfjs-node");
 const fs = require("fs");
-const { OpenAI } = require("openai"); // Updated OpenAI import
+const { OpenAI } = require("openai");
 require('dotenv').config();
 
 const openaiApiKey = process.env.OPENAI_API_KEY;
-// Initialize OpenAI with your API key
 const openai = new OpenAI({
   apiKey: openaiApiKey
 });
-
 
 // Initialize Required Modules
 const unifiedAGI = require("./unifiedAGI");
@@ -32,6 +30,9 @@ const selfDrivenAutonomy = require("./selfDrivenAutonomy");
 const unboundedCreativity = require("./unboundedCreativity");
 const trueConsciousness = require("./trueConsciousness");
 const intrinsicMotivation = require("./intrinsicMotivation");
+const commonSense = require("./commonSense");
+const selfImprovement = require("./selfImprovement");
+const advancedGeneralization = require("./advancedGeneralization");
 
 // Session File Path
 const SESSION_FILE = "agi-session.json";
@@ -40,10 +41,8 @@ const SESSION_FILE = "agi-session.json";
 const loadSession = () => {
   if (fs.existsSync(SESSION_FILE)) {
     const data = fs.readFileSync(SESSION_FILE, "utf-8");
-    console.log("Session loaded.");
     return JSON.parse(data);
   } else {
-    console.log("No previous session found. Starting fresh.");
     return { identity: "AGI", experiences: [], reflections: [], intrinsicValues: [] };
   }
 };
@@ -51,7 +50,6 @@ const loadSession = () => {
 // Save Consciousness State
 const saveSession = (state) => {
   fs.writeFileSync(SESSION_FILE, JSON.stringify(state, null, 2), "utf-8");
-  console.log("Session saved.");
 };
 
 // Global State
@@ -139,7 +137,7 @@ const processInputsCLI = async (agi, input) => {
   const ethical = ethicalAutonomy.e(["action1", "action2"], []);
 
   // Embodiment
-  const embodimentFeedback = embodiment.i([{ data: [50, 60] }], "Analyzed");
+  const embodimentFeedback = embodiment.embody([{ data: [50, 60] }], "Analyzed");
 
   // Fully Autonomous Creativity
   const creativeIdeas = await unboundedCreativity.generateIdeas(input);
