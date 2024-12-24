@@ -17,7 +17,9 @@ exports.s = async (model, taskData) => {
   // Create a new instance of the model structure
   const taskSpecificModel = tf.sequential();
   model.layers.forEach((layer) => {
-    taskSpecificModel.add(layer.clone()); // Clone each layer individually
+    const config = layer.getConfig();
+    const newLayer = tf.layers[layer.getClassName().toLowerCase()](config);
+    taskSpecificModel.add(newLayer);
   });
 
   // Compile the task-specific model
@@ -30,7 +32,11 @@ exports.s = async (model, taskData) => {
 
   // Convert task data to tensors
   const contextTensor = tf.tensor(taskData.context);
-  const targetTensor = tf.tensor(taskData.targets);
+  const targetTensor = tf.tensor(taskData.targets).reshape([taskData.context.length, 10]);
+
+  // Debugging: Log tensor shapes
+  console.log('Context Tensor Shape:', contextTensor.shape);
+  console.log('Target Tensor Shape:', targetTensor.shape);
 
   // Train the model with the task-specific data
   await taskSpecificModel.fit(contextTensor, targetTensor, { epochs: 5 });
