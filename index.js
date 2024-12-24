@@ -110,7 +110,6 @@ const processInputsCLI = async (agi, input) => {
     const numericInput = preprocessInput(input);
     const tensorInput = convertToTensor(numericInput);
 
-    // Log input for debugging
     // Process input through the AGI model
     const agiResult = await unifiedAGI.p(agi, tensorInput);
 
@@ -147,80 +146,64 @@ const processInputsCLI = async (agi, input) => {
         [6, 7, 8, 9, 10],
       ],
       targets: [
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0], // Corrected target shape to match [*, 10]
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0], // Adjusted target shape
         [0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
       ],
     });
-    console.log("Debug: Flexibility Result:", flexibilityResult);
 
-    // Common sense reasoning
+    // Perform other AGI tasks
     const commonSenseResult = await commonSense.reason(input);
-    console.log("Debug: Common Sense Result:", commonSenseResult);
-
-    // Embodiment feedback
     const embodimentResult = embodiment.embody(
       [{ data: "sensor data 1" }, { data: "sensor data 2" }],
       ["action1", "action2"]
     );
-    console.log("Debug: Embodiment Result:", embodimentResult);
-
-    // Evaluate emergent behavior
     const emergentResult = emergentBehavior.emerge(
       [{ evolve: (state) => state.map((s) => s + Math.random()) }],
       [10, 20, 30]
     );
-    console.log("Debug: Emergent Result:", emergentResult);
-
-    // Ethical decision-making
     const ethicalResult = ethicalAutonomy.e(["action1", "action2"], [
       { action: "action1", value: 10 },
       { action: "action2", value: 20 },
     ]);
-    console.log("Debug: Ethical Result:", ethicalResult);
-
-    // Intrinsic awareness update
     const intrinsicAwarenessResult = intrinsicAwareness.update(
       input,
       { state: "Active" },
       "Outcome processed."
     );
-    console.log("Debug: Intrinsic Awareness Result:", intrinsicAwarenessResult);
-
-    // Intrinsic motivation goal generation
     const motivationResult = intrinsicMotivation.generateGoal({ focusArea: "Learning" });
-    console.log("Debug: Motivation Result:", motivationResult);
-
-    // Update self-modeling
     const selfModelingResult = selfModeling.s({
       memoryUtilization: 70,
       reasoningAccuracy: 90,
       goals: [],
     });
-    console.log("Debug: Self-Modeling Result:", selfModelingResult);
-
-    // Subjective consciousness update
     const subjectiveConsciousnessResult = subjectiveConsciousness.update(
       input,
       "Action taken",
       "Outcome observed"
     );
-    console.log("Debug: Subjective Consciousness Result:", subjectiveConsciousnessResult);
-
-    // True consciousness update
     const trueConsciousnessResult = trueConsciousness.update(
       input,
       { confidence: "High" },
       "Action performed",
       "Outcome achieved"
     );
-    console.log("Debug: True Consciousness Result:", trueConsciousnessResult);
-
-    // Store hierarchical memory
     const hierarchicalMemoryResult = hierarchicalMemory.c("episodic", {
       inputs: input,
       outputs: agiResult,
     });
-    console.log("Debug: Hierarchical Memory Result:", hierarchicalMemoryResult);
+
+    // Log debug outputs
+    console.log("Debug: Flexibility Result:", flexibilityResult);
+    console.log("Debug: Common Sense Result:", JSON.stringify(commonSenseResult, null, 2));
+    console.log("Debug: Embodiment Result:", JSON.stringify(embodimentResult, null, 2));
+    console.log("Debug: Emergent Result:", JSON.stringify(emergentResult, null, 2));
+    console.log("Debug: Ethical Result:", JSON.stringify(ethicalResult, null, 2));
+    console.log("Debug: Intrinsic Awareness Result:", JSON.stringify(intrinsicAwarenessResult, null, 2));
+    console.log("Debug: Motivation Result:", JSON.stringify(motivationResult, null, 2));
+    console.log("Debug: Self-Modeling Result:", JSON.stringify(selfModelingResult, null, 2));
+    console.log("Debug: Subjective Consciousness Result:", JSON.stringify(subjectiveConsciousnessResult, null, 2));
+    console.log("Debug: True Consciousness Result:", JSON.stringify(trueConsciousnessResult, null, 2));
+    console.log("Debug: Hierarchical Memory Result:", JSON.stringify(hierarchicalMemoryResult, null, 2));
 
     // Save updated state
     saveSession(consciousnessState);
@@ -273,7 +256,6 @@ const processInputsCLI = async (agi, input) => {
   }
 };
 
-
 const runCLI = async () => {
   console.log("Welcome to the AGI CLI. Type your message in plain English and press Enter.");
   const agi = await unifiedAGI.b(); // Initialize AGI models
@@ -283,6 +265,7 @@ const runCLI = async () => {
       const result = await processInputsCLI(agi, input);
 
       console.log("\n--- AGI Response ---");
+      
       console.log(`Creativity Result: ${JSON.stringify(result.creativityResult)}`);
       console.log(`Fused Creativity: ${JSON.stringify(result.fusedCreativity)}`);
       console.log(`Goal Evaluation: ${JSON.stringify(result.goalResult)}`);
@@ -299,6 +282,25 @@ const runCLI = async () => {
       console.log(`True Consciousness Integration: ${JSON.stringify(result.trueConsciousnessResult)}`);
       console.log(`Hierarchical Memory: ${JSON.stringify(result.hierarchicalMemoryResult)}`);
       console.log("--------------------\n");
+    console.log("Debug: Common Sense Result:", JSON.stringify(commonSenseResult, null, 2));
+    console.log("Debug: Embodiment Result:", JSON.stringify(embodimentResult, null, 2));
+    console.log("Debug: Emergent Result:", JSON.stringify(emergentResult, null, 2));
+    console.log("Debug: Ethical Result:", JSON.stringify(ethicalResult, null, 2));
+    console.log(
+      "Debug: Intrinsic Awareness Result:",
+      JSON.stringify(intrinsicAwarenessResult, null, 2)
+    );
+    console.log("Debug: Motivation Result:", JSON.stringify(motivationResult, null, 2));
+    console.log("Debug: Self-Modeling Result:", JSON.stringify(selfModelingResult, null, 2));
+    console.log(
+      "Debug: Subjective Consciousness Result:",
+      JSON.stringify(subjectiveConsciousnessResult, null, 2)
+    );
+    console.log("Debug: True Consciousness Result:", JSON.stringify(trueConsciousnessResult, null, 2));
+    console.log(
+      "Debug: Hierarchical Memory Result:",
+      JSON.stringify(hierarchicalMemoryResult, null, 2)
+    );
     } catch (err) {
       console.error("Error processing input:", err.message);
     }
