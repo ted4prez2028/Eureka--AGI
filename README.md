@@ -1,9 +1,9 @@
-Here is the updated `README.md` with the MIT license and copyright information added:
+### **README.md**
 
 ```markdown
-# AGI System
+# Eureka AGI System
 
-This project implements a comprehensive Artificial General Intelligence (AGI) system, integrating various cognitive abilities such as abstraction, creativity, consciousness modeling, memory management, and autonomous decision-making. The system utilizes advanced machine learning models, including deep neural networks and recurrent networks (LSTM), to simulate human-like reasoning, learning, and creativity.
+The Eureka API integrates with the AGI framework to provide advanced cognitive capabilities, including abstraction, creativity, memory management, and autonomous decision-making. It also offers an API endpoint for easy interaction and project management.
 
 ## Features
 
@@ -25,6 +25,47 @@ This project implements a comprehensive Artificial General Intelligence (AGI) sy
 - **TensorFlow.js**: Utilized for building deep learning models, including dense layers and LSTM networks.
 - **OpenAI API**: Employed for generating abstract solutions, creative ideas, and more.
 - **Node.js**: The backend framework, using `express` for routing and `dotenv` for environment variable management.
+
+---
+
+## API Overview
+
+### Base URL
+```
+http://104.156.226.2:5000
+```
+
+### Endpoints
+
+#### **1. `/eureka`**
+- **Method**: `POST`
+- **Description**: Accepts a prompt to generate JavaScript snippets or manage project modifications.
+
+#### Request Body
+
+- **Format**: JSON
+- **Required Fields**:
+  - `prompt`: A string describing what the API should generate or modify.
+
+#### Example Request
+
+```bash
+curl -X POST http://104.156.226.2:5000/eureka \
+-H "Content-Type: application/json" \
+-d '{
+  "prompt": "Write a function in JavaScript to reverse a string"
+}'
+```
+
+#### Example Response
+
+```json
+{
+  "result": "// File: reverseString.js\nfunction reverseString(str) {\n  return str.split('').reverse().join('');\n}"
+}
+```
+
+---
 
 ## Installation
 
@@ -49,52 +90,68 @@ This project implements a comprehensive Artificial General Intelligence (AGI) sy
    OPENAI_API_KEY=your-openai-api-key
    ```
 
+5. Start the server:
+   ```bash
+   node server.js
+   ```
+
+---
+
 ## Usage
 
-To start the AGI system, run the following command:
+### Accessing the API
+
+#### **Using Curl**
 ```bash
-npm start
+curl -X POST http://104.156.226.2:5000/eureka \
+-H "Content-Type: application/json" \
+-d '{
+  "prompt": "Write a function in JavaScript to merge two sorted arrays"
+}'
 ```
 
-This will launch the command-line interface (CLI), where you can interact with the AGI system. The system will process your inputs and provide responses based on its reasoning, creativity, and learning capabilities.
+#### **Using Node.js with Axios**
+```javascript
+const axios = require('axios');
 
-## API
+const EUREKA_API_URL = "http://104.156.226.2:5000/eureka";
 
-The system provides several functionalities for different cognitive and reasoning tasks. Below are a few examples:
+async function queryEureka(prompt) {
+  try {
+    const response = await axios.post(EUREKA_API_URL, { prompt });
+    console.log("Response from Eureka:", response.data.result);
+  } catch (error) {
+    console.error("Error querying Eureka:", error.response?.data || error.message);
+  }
+}
 
-### Example: Generate Creative Idea
+queryEureka("Write a function in JavaScript to sort an array.");
+```
+
+---
+
+## Example: Generate Creative Idea
 
 To generate a creative idea:
-```js
+```javascript
 const { generateCreativeIdeas } = require('./autonomousCreativity');
 const result = await generateCreativeIdeas("new tech product");
 console.log(result);
 ```
 
-### Example: Evaluate Intrinsic State
+---
 
-To evaluate intrinsic state deviations:
-```js
-const { evaluateState } = require('./intrinsicValues');
-const state = {
-    creativity: { current: 85, expected: 90 },
-    adaptability: { current: 70, expected: 80 }
-};
-const result = evaluateState(state);
-console.log(result);
-```
+## Error Handling
 
-### Example: Test Hypothesis
+- **400 Bad Request**:
+  - The `prompt` field is missing or invalid.
+  - Ensure your request body includes a valid `prompt`.
 
-To test a hypothesis using logic-based reasoning:
-```js
-const { r } = require('./abstractReasoning');
-const facts = [{ fact: "data" }];
-const rules = [{ rule: "if data then result" }];
-const hypothesis = "result";
-const result = r(facts, rules, hypothesis);
-console.log(result);
-```
+- **500 Internal Server Error**:
+  - An issue occurred on the server.
+  - Retry or contact support if the issue persists.
+
+---
 
 ## Contributing
 
@@ -103,6 +160,8 @@ console.log(result);
 3. Make your changes and commit them (`git commit -am 'Add feature'`).
 4. Push to the branch (`git push origin feature-name`).
 5. Open a pull request.
+
+---
 
 ## License
 
