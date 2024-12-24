@@ -1,10 +1,10 @@
 {
   "name": "eureka-agi",
   "version": "1.0.0",
-  "description": "AGIS",
-  "main": "index.js",
+  "description": "AGI - Artificial General Intelligence",
+  "main": "usage.js",
   "scripts": {
-    "start": "node eureka.js",
+    "start": "node index.js",
     "test": "jest"
   },
   "keywords": [],

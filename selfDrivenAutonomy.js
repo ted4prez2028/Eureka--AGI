@@ -1,7 +1,7 @@
 // File: selfDrivenAutonomy.js
 const intrinsicGoals = {
     activeGoals: [],
-    longTermValues: ["creativity", "adaptability", "efficiency"],
+    /*danger*/longTermValues: ["creativity", "adaptability", "efficiency"],
   };
   
   exports.generateGoal = (stateAnalysis) => {

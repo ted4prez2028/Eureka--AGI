@@ -8,7 +8,12 @@ class LogicEngine {
   }
 
   train(data) {
-    this.net.train(data);
+    // Ensure `data` is in { input: {}, output: {} } format
+    const formattedData = data.map((item) => ({
+      input: item.input,
+      output: item.output,
+    }));
+    this.net.train(formattedData);
   }
 
   run(input) {
@@ -16,7 +21,11 @@ class LogicEngine {
   }
 
   loadFacts(facts) {
-    this.facts = facts;
+    // Format facts into { input: {}, output: {} } format
+    this.facts = facts.map((fact) => ({
+      input: { [fact.fact]: fact.value },
+      output: { result: 1 },
+    }));
   }
 
   loadRules(rules) {
@@ -25,14 +34,14 @@ class LogicEngine {
 
   testHypothesis(hypothesis) {
     if (this.facts.length === 0) {
-      throw new Error("No facts loaded for hypothesis testing.");
+      throw new Error('No facts loaded for hypothesis testing.');
     }
 
-    const input = this.facts.map(fact => fact.value);
-    this.train(this.facts); // Ensure the network is trained before running
+    this.train(this.facts); // Train with formatted facts
+    const input = this.facts[0].input; // Use the first fact for testing
     const output = this.run(input);
 
-    return output >= 0.5 ? hypothesis : "Hypothesis invalid";
+    return output.result >= 0.5 ? hypothesis : 'Hypothesis invalid';
   }
 }
 
